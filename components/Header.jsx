@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import logo from '../public/logo.jpg';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,7 +12,7 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/">
               <img
-                src="/logo.jpg"
+                src={logo.src}
                 alt="P2A Consulting Agency Logo"
                 className="h-10 w-auto"
               />

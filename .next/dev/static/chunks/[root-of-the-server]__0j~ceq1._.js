@@ -1127,71 +1127,103 @@ __turbopack_context__.s([
     ()=>ScheduleSection
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
-;
-var _s = __turbopack_context__.k.signature();
 ;
 function ScheduleSection() {
-    _s();
-    const [schedule, setSchedule] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "ScheduleSection.useEffect": ()=>{
-            generateWeekSchedule();
-        }
-    }["ScheduleSection.useEffect"], []);
+    // Gerar schedule diretamente para compatibilidade com export estático
     function generateWeekSchedule() {
-        const days = [
-            'Domingo',
-            'Segunda',
-            'Terça',
-            'Quarta',
-            'Quinta',
-            'Sexta',
-            'Sábado'
-        ];
-        const today = new Date();
-        // Começa na segunda-feira da semana atual
-        const startOfWeek = new Date(today);
-        startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Segunda-feira
-        // Se hoje é domingo, começa na próxima segunda
-        if (today.getDay() === 0) {
-            startOfWeek.setDate(today.getDate() + 1);
-        }
-        const weekDays = [];
-        // Gera segunda a sábado (6 dias)
-        for(let i = 0; i < 6; i++){
-            const day = new Date(startOfWeek);
-            day.setDate(startOfWeek.getDate() + i);
-            const dayName = days[day.getDay()];
-            const formattedDate = day.toLocaleDateString('pt-BR', {
-                day: 'numeric',
-                month: 'short'
-            });
-            const hours = [];
-            for(let h = 8; h <= 18; h++){
-                const timeString = `${h.toString().padStart(2, '0')}:00`;
-                const hourDate = new Date(day);
-                hourDate.setHours(h, 0, 0, 0);
-                // Verifica se o horário já passou (para desativar horários passados)
-                const isPast = hourDate < new Date().setHours(0, 0, 0, 0);
-                hours.push({
-                    time: timeString,
-                    displayTime: `${h}h`,
-                    date: day,
+        try {
+            const days = [
+                'Domingo',
+                'Segunda',
+                'Terça',
+                'Quarta',
+                'Quinta',
+                'Sexta',
+                'Sábado'
+            ];
+            const today = new Date();
+            // Começa na segunda-feira da semana atual
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Segunda-feira
+            // Se hoje é domingo, começa na próxima segunda
+            if (today.getDay() === 0) {
+                startOfWeek.setDate(today.getDate() + 1);
+            }
+            const weekDays = [];
+            // Gera segunda a sábado (6 dias)
+            for(let i = 0; i < 6; i++){
+                const day = new Date(startOfWeek);
+                day.setDate(startOfWeek.getDate() + i);
+                const dayName = days[day.getDay()];
+                const formattedDate = day.toLocaleDateString('pt-BR', {
+                    day: 'numeric',
+                    month: 'short'
+                });
+                const hours = [];
+                for(let h = 8; h <= 18; h++){
+                    const timeString = `${h.toString().padStart(2, '0')}:00`;
+                    const hourDate = new Date(day);
+                    hourDate.setHours(h, 0, 0, 0);
+                    // Criar timestamp para comparação mais confiável
+                    const todayStart = new Date();
+                    todayStart.setHours(0, 0, 0, 0);
+                    const hourTimestamp = hourDate.getTime();
+                    const todayTimestamp = todayStart.getTime();
+                    const dayTimestamp = day.getTime();
+                    // Verifica se o horário já passado (apenas para hoje)
+                    const isPast = hourTimestamp < todayTimestamp && dayTimestamp === todayTimestamp;
+                    hours.push({
+                        time: timeString,
+                        displayTime: `${h}h`,
+                        date: day,
+                        dayName,
+                        formattedDate,
+                        isPast
+                    });
+                }
+                weekDays.push({
                     dayName,
                     formattedDate,
-                    isPast: isPast && day.toDateString() === new Date().toDateString() // Só desativa se for hoje e horário passado
+                    date: day,
+                    hours,
+                    isToday: day.getTime() === new Date().setHours(0, 0, 0, 0)
                 });
             }
-            weekDays.push({
-                dayName,
-                formattedDate,
-                date: day,
-                hours,
-                isToday: day.toDateString() === new Date().toDateString()
-            });
+            return weekDays;
+        } catch (error) {
+            console.error('Error generating schedule:', error);
+            // Fallback schedule in case of error
+            const fallbackDays = [
+                'Segunda',
+                'Terça',
+                'Quarta',
+                'Quinta',
+                'Sexta',
+                'Sábado'
+            ];
+            return fallbackDays.map((dayName)=>({
+                    dayName,
+                    formattedDate: new Date().toLocaleDateString('pt-BR', {
+                        day: 'numeric',
+                        month: 'short'
+                    }),
+                    date: new Date(),
+                    hours: Array.from({
+                        length: 11
+                    }, (_, i)=>({
+                            time: `${String(i + 8).padStart(2, '0')}:00`,
+                            displayTime: `${i + 8}h`,
+                            date: new Date(),
+                            dayName,
+                            formattedDate: new Date().toLocaleDateString('pt-BR', {
+                                day: 'numeric',
+                                month: 'short'
+                            }),
+                            isPast: false
+                        })),
+                    isToday: true
+                }));
         }
-        setSchedule(weekDays);
     }
     function getWhatsAppLink(date, time) {
         // Replace with actual WhatsApp number
@@ -1199,16 +1231,7 @@ function ScheduleSection() {
         const message = encodeURIComponent(`Olá, gostaria de agendar uma consulta para o dia ${date.toLocaleDateString('pt-BR')} às ${time}.`);
         return `https://wa.me/${phoneNumber}?text=${message}`;
     }
-    if (schedule.length === 0) {
-        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "py-20 text-center",
-            children: "Carregando horários..."
-        }, void 0, false, {
-            fileName: "[project]/components/ScheduleSection.jsx",
-            lineNumber: 72,
-            columnNumber: 12
-        }, this);
-    }
+    const schedule = generateWeekSchedule();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         id: "agendar",
         className: "py-20 bg-white",
@@ -1220,7 +1243,7 @@ function ScheduleSection() {
                     children: "Agende uma Consulta"
                 }, void 0, false, {
                     fileName: "[project]/components/ScheduleSection.jsx",
-                    lineNumber: 78,
+                    lineNumber: 96,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1239,20 +1262,20 @@ function ScheduleSection() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/ScheduleSection.jsx",
-                                            lineNumber: 85,
+                                            lineNumber: 103,
                                             columnNumber: 17
                                         }, this),
                                         day.isToday && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "ml-2 h-4 w-4 bg-blue-600 rounded-full animate-pulse"
                                         }, void 0, false, {
                                             fileName: "[project]/components/ScheduleSection.jsx",
-                                            lineNumber: 88,
+                                            lineNumber: 106,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/ScheduleSection.jsx",
-                                    lineNumber: 84,
+                                    lineNumber: 102,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1266,23 +1289,23 @@ function ScheduleSection() {
                                             children: hour.displayTime
                                         }, hourIndex, false, {
                                             fileName: "[project]/components/ScheduleSection.jsx",
-                                            lineNumber: 92,
+                                            lineNumber: 110,
                                             columnNumber: 19
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/components/ScheduleSection.jsx",
-                                    lineNumber: 90,
+                                    lineNumber: 108,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, dayIndex, true, {
                             fileName: "[project]/components/ScheduleSection.jsx",
-                            lineNumber: 83,
+                            lineNumber: 101,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/ScheduleSection.jsx",
-                    lineNumber: 81,
+                    lineNumber: 99,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1291,35 +1314,34 @@ function ScheduleSection() {
                         "Os links abrem uma conversa pré-formatada no WhatsApp para agendamento.",
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                             fileName: "[project]/components/ScheduleSection.jsx",
-                            lineNumber: 109,
+                            lineNumber: 127,
                             columnNumber: 11
                         }, this),
                         "Horários disponíveis: Segunda a Sábado, das 8h às 18h.",
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                             fileName: "[project]/components/ScheduleSection.jsx",
-                            lineNumber: 111,
+                            lineNumber: 129,
                             columnNumber: 11
                         }, this),
                         "Horários em cinza já passaram e não estão disponíveis."
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/ScheduleSection.jsx",
-                    lineNumber: 107,
+                    lineNumber: 125,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/ScheduleSection.jsx",
-            lineNumber: 77,
+            lineNumber: 95,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ScheduleSection.jsx",
-        lineNumber: 76,
+        lineNumber: 94,
         columnNumber: 5
     }, this);
 }
-_s(ScheduleSection, "ufj6drX7OuS1FJ8vycY2bacy/To=");
 _c = ScheduleSection;
 var _c;
 __turbopack_context__.k.register(_c, "ScheduleSection");

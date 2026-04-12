@@ -1,14 +1,16 @@
+import banner from '../public/banner.png';
+
 export default function Banner() {
   return (
     <section className="relative min-h-[600px] h-[70vh] max-h-[800px] bg-gradient-to-r from-gray-50 to-gray-100 overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src="/banner.png"
+          src={banner.src}
           alt="Tecnologia e inovação - Escritório moderno com equipe colaborando"
           className="w-full h-full object-cover opacity-85"
         />
       </div>
-      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+      <div className="absolute inset-0 bg-black/80"></div>
       <div className="relative h-full flex items-center text-white text-center p-6">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
