@@ -1,0 +1,26 @@
+{
+  "name": "p2aconsultingagency",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:KsmKayk/p2aconsultingagency.git",
+  "author": "Kayk Mascarenhas <kaykdsg@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "next": "^16.2.3",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.9",
+    "tailwindcss": "^4.2.2"
+  }
+}
