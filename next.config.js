@@ -1,19 +1,13 @@
 /**
  * @type {import('next').NextConfig}
  */
+
+const repo = 'p2aconsultingagency'
+
 const nextConfig = {
   output: 'export',
-  assetPrefix: './',
-  basePath: '',
- 
-  // Optional: Change links `/me` -> `/me/` and emit `/me.html` -> `/me/index.html`
-  // trailingSlash: true,
- 
-  // Optional: Prevent automatic `/me` -> `/me/`, instead preserve `href`
-  // skipTrailingSlashRedirect: true,
- 
-  // Optional: Change the output directory `out` -> `dist`
-  // distDir: 'dist',
+  basePath: ``,
+  assetPrefix: `./`,
 }
- 
+
 module.exports = nextConfig
