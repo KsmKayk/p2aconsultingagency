@@ -1,64 +1,84 @@
-import { useState, useEffect } from 'react';
-
 export default function ScheduleSection() {
-  const [schedule, setSchedule] = useState([]);
-
-  useEffect(() => {
-    generateWeekSchedule();
-  }, []);
-
+  // Gerar schedule diretamente para compatibilidade com export estático
   function generateWeekSchedule() {
-    const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-    const today = new Date();
+    try {
+      const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+      const today = new Date();
 
-    // Começa na segunda-feira da semana atual
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Segunda-feira
+      // Começa na segunda-feira da semana atual
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Segunda-feira
 
-    // Se hoje é domingo, começa na próxima segunda
-    if (today.getDay() === 0) {
-      startOfWeek.setDate(today.getDate() + 1);
-    }
+      // Se hoje é domingo, começa na próxima segunda
+      if (today.getDay() === 0) {
+        startOfWeek.setDate(today.getDate() + 1);
+      }
 
-    const weekDays = [];
+      const weekDays = [];
 
-    // Gera segunda a sábado (6 dias)
-    for (let i = 0; i < 6; i++) {
-      const day = new Date(startOfWeek);
-      day.setDate(startOfWeek.getDate() + i);
+      // Gera segunda a sábado (6 dias)
+      for (let i = 0; i < 6; i++) {
+        const day = new Date(startOfWeek);
+        day.setDate(startOfWeek.getDate() + i);
 
-      const dayName = days[day.getDay()];
-      const formattedDate = day.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' });
+        const dayName = days[day.getDay()];
+        const formattedDate = day.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' });
 
-      const hours = [];
-      for (let h = 8; h <= 18; h++) {
-        const timeString = `${h.toString().padStart(2, '0')}:00`;
-        const hourDate = new Date(day);
-        hourDate.setHours(h, 0, 0, 0);
+        const hours = [];
+        for (let h = 8; h <= 18; h++) {
+          const timeString = `${h.toString().padStart(2, '0')}:00`;
+          const hourDate = new Date(day);
+          hourDate.setHours(h, 0, 0, 0);
 
-        // Verifica se o horário já passou (para desativar horários passados)
-        const isPast = hourDate < new Date().setHours(0, 0, 0, 0);
+          // Criar timestamp para comparação mais confiável
+          const todayStart = new Date();
+          todayStart.setHours(0, 0, 0, 0);
+          const hourTimestamp = hourDate.getTime();
+          const todayTimestamp = todayStart.getTime();
+          const dayTimestamp = day.getTime();
 
-        hours.push({
-          time: timeString,
-          displayTime: `${h}h`,
-          date: day,
+          // Verifica se o horário já passado (apenas para hoje)
+          const isPast = hourTimestamp < todayTimestamp && dayTimestamp === todayTimestamp;
+
+          hours.push({
+            time: timeString,
+            displayTime: `${h}h`,
+            date: day,
+            dayName,
+            formattedDate,
+            isPast
+          });
+        }
+
+        weekDays.push({
           dayName,
           formattedDate,
-          isPast: isPast && day.toDateString() === new Date().toDateString() // Só desativa se for hoje e horário passado
+          date: day,
+          hours,
+          isToday: day.getTime() === new Date().setHours(0, 0, 0, 0)
         });
       }
 
-      weekDays.push({
+      return weekDays;
+    } catch (error) {
+      console.error('Error generating schedule:', error);
+      // Fallback schedule in case of error
+      const fallbackDays = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+      return fallbackDays.map(dayName => ({
         dayName,
-        formattedDate,
-        date: day,
-        hours,
-        isToday: day.toDateString() === new Date().toDateString()
-      });
+        formattedDate: new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' }),
+        date: new Date(),
+        hours: Array.from({ length: 11 }, (_, i) => ({
+          time: `${String(i + 8).padStart(2, '0')}:00`,
+          displayTime: `${i + 8}h`,
+          date: new Date(),
+          dayName,
+          formattedDate: new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' }),
+          isPast: false
+        })),
+        isToday: true
+      }));
     }
-
-    setSchedule(weekDays);
   }
 
   function getWhatsAppLink(date, time) {
@@ -68,9 +88,7 @@ export default function ScheduleSection() {
     return `https://wa.me/${phoneNumber}?text=${message}`;
   }
 
-  if (schedule.length === 0) {
-    return <div className="py-20 text-center">Carregando horários...</div>;
-  }
+  const schedule = generateWeekSchedule();
 
   return (
     <section id="agendar" className="py-20 bg-white">
