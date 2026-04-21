@@ -4,6 +4,9 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { UserIcon, EyeIcon } from '@heroicons/react/24/solid';
 
+import func1 from '../public/func1.jpg';
+import func2 from '../public/func2.jpg';
+
 export default function AboutSection() {
   return (
     <section id="sobre" className="py-20 bg-white">
@@ -62,7 +65,7 @@ export default function AboutSection() {
             <div className="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto px-2">
               <div className="w-full max-w-xs sm:max-w-sm h-56 sm:h-64 mx-auto md:mx-0 overflow-hidden rounded-xl shadow-sm">
                 <img
-                  src="/func1.jpg"
+                  src={func1.src}
                   alt="Funcionário 1"
                   className="w-full h-full object-cover"
                 />
@@ -82,7 +85,7 @@ export default function AboutSection() {
             <div className="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto px-2">
               <div className="w-full max-w-xs sm:max-w-sm h-56 sm:h-64 mx-auto md:mx-0 overflow-hidden rounded-xl shadow-sm">
                 <img
-                  src="/func2.jpg"
+                  src={func2.src}
                   alt="Funcionário 2"
                   className="w-full h-full object-cover"
                 />
