@@ -1,94 +1,53 @@
+import { useState } from 'react';
+
 export default function ScheduleSection() {
-  // Gerar schedule diretamente para compatibilidade com export estático
-  function generateWeekSchedule() {
-    try {
-      const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-      const today = new Date();
-
-      // Começa na segunda-feira da semana atual
-      const startOfWeek = new Date(today);
-      startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Segunda-feira
-
-      // Se hoje é domingo, começa na próxima segunda
-      if (today.getDay() === 0) {
-        startOfWeek.setDate(today.getDate() + 1);
-      }
-
-      const weekDays = [];
-
-      // Gera segunda a sábado (6 dias)
-      for (let i = 0; i < 6; i++) {
-        const day = new Date(startOfWeek);
-        day.setDate(startOfWeek.getDate() + i);
-
-        const dayName = days[day.getDay()];
-        const formattedDate = day.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' });
-
-        const hours = [];
-        for (let h = 8; h <= 18; h++) {
-          const timeString = `${h.toString().padStart(2, '0')}:00`;
-          const hourDate = new Date(day);
-          hourDate.setHours(h, 0, 0, 0);
-
-          // Criar timestamp para comparação mais confiável
-          const todayStart = new Date();
-          todayStart.setHours(0, 0, 0, 0);
-          const hourTimestamp = hourDate.getTime();
-          const todayTimestamp = todayStart.getTime();
-          const dayTimestamp = day.getTime();
-
-          // Verifica se o horário já passado (apenas para hoje)
-          const isPast = hourTimestamp < todayTimestamp && dayTimestamp === todayTimestamp;
-
-          hours.push({
-            time: timeString,
-            displayTime: `${h}h`,
-            date: day,
-            dayName,
-            formattedDate,
-            isPast
-          });
-        }
-
-        weekDays.push({
-          dayName,
-          formattedDate,
-          date: day,
-          hours,
-          isToday: day.getTime() === new Date().setHours(0, 0, 0, 0)
-        });
-      }
-
-      return weekDays;
-    } catch (error) {
-      console.error('Error generating schedule:', error);
-      // Fallback schedule in case of error
-      const fallbackDays = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-      return fallbackDays.map(dayName => ({
-        dayName,
-        formattedDate: new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' }),
-        date: new Date(),
-        hours: Array.from({ length: 11 }, (_, i) => ({
-          time: `${String(i + 8).padStart(2, '0')}:00`,
-          displayTime: `${i + 8}h`,
-          date: new Date(),
-          dayName,
-          formattedDate: new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' }),
-          isPast: false
-        })),
-        isToday: true
-      }));
-    }
+  function formatDateForInput(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   function getWhatsAppLink(date, time) {
     // Replace with actual WhatsApp number
-    const phoneNumber = "5511999999999"; // Example Brazilian number
+    const phoneNumber = "5521983695022"; // Updated number from UPDATE_CLAUDE.md
     const message = encodeURIComponent(`Olá, gostaria de agendar uma consulta para o dia ${date.toLocaleDateString('pt-BR')} às ${time}.`);
     return `https://wa.me/${phoneNumber}?text=${message}`;
   }
 
-  const schedule = generateWeekSchedule();
+  const [selectedDate, setSelectedDate] = useState(formatDateForInput(new Date()));
+  const [selectedTime, setSelectedTime] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!selectedDate || !selectedTime) {
+      alert('Por favor, selecione uma data e horário.');
+      return;
+    }
+
+    const selectedDateObj = new Date(selectedDate);
+    const [hours, minutes] = selectedTime.split(':').map(Number);
+    const selectedDateTime = new Date(selectedDate);
+    selectedDateTime.setHours(hours, minutes, 0, 0);
+    const now = new Date();
+
+    // Check if selected time is in the past for today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDateOnly = new Date(selectedDate);
+    selectedDateOnly.setHours(0, 0, 0, 0);
+
+    const isToday = selectedDateOnly.getTime() === today.getTime();
+
+    if (isToday && selectedDateTime < now) {
+      alert('Não é possível agendar para horários que já passaram.');
+      return;
+    }
+
+    const whatsappLink = getWhatsAppLink(selectedDateObj, selectedTime);
+    window.open(whatsappLink, '_blank');
+  };
 
   return (
     <section id="agendar" className="py-20 bg-white">
@@ -97,38 +56,45 @@ export default function ScheduleSection() {
           Agende uma Consulta
         </h2>
         <div className="space-y-8">
-          {schedule.map((day, dayIndex) => (
-            <div key={dayIndex}>
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-                <span className={day.isToday ? 'text-blue-600' : 'text-gray-800'}>
-                  {day.dayName}, {day.formattedDate}
-                </span>
-                {day.isToday && <span className="ml-2 h-4 w-4 bg-blue-600 rounded-full animate-pulse" />}
-              </h3>
-              <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
-                {day.hours.map((hour, hourIndex) => (
-                  <a
-                    key={hourIndex}
-                    href={!hour.isPast && getWhatsAppLink(day.date, hour.time)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`block
-                    ${hour.isPast ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-blue-50 hover:bg-blue-100 text-blue-800 font-medium py-2 px-3 rounded-lg text-center transition-all duration-200 transform hover:scale-[1.05] border border-blue-200 hover:border-blue-300'}`}
-                  >
-                    {hour.displayTime}
-                  </a>
+          <div className="text-center">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+              Selecione data e horário para agendamento
+            </h3>
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <input
+                type="date"
+                id="datePicker"
+                className="w-full max-w-xs px-4 py-2 border text-gray-600 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+              />
+              <select
+                id="timeSelect"
+                className="w-full max-w-xs px-4 py-2 border text-gray-600 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={selectedTime}
+                onChange={(e) => setSelectedTime(e.target.value)}
+              >
+                <option value="">Selecione o horário</option>
+                {[...Array(11)].map((_, i) => i + 8).map(hour => (
+                  <option key={hour} value={`${hour.toString().padStart(2, '0')}:00`}>
+                    {hour}h
+                  </option>
                 ))}
-              </div>
-            </div>
-          ))}
+              </select>
+              <button
+                type="submit"
+                className="w-full max-w-xs bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 transform hover:scale-[1.05]"
+              >
+                Agendar Consulta
+              </button>
+            </form>
+            <p className="mt-4 text-gray-600 text-sm">
+              Horários disponíveis: todos os dias, das 8h às 18h.
+            </p>
+          </div>
+
         </div>
-        <p className="mt-8 text-center text-gray-600 text-sm">
-          Os links abrem uma conversa pré-formatada no WhatsApp para agendamento.
-          <br />
-          Horários disponíveis: Segunda a Sábado, das 8h às 18h.
-          <br />
-          Horários em cinza já passaram e não estão disponíveis.
-        </p>
+
       </div>
     </section>
   );

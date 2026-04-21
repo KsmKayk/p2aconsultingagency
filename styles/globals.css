@@ -23,3 +23,21 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.about-swiper {
+  padding-bottom: 2.5rem;
+}
+
+.about-swiper .swiper-button-prev,
+.about-swiper .swiper-button-next {
+  color: #2563eb;
+}
+
+.about-swiper .swiper-pagination-bullet {
+  background: #9ca3af;
+  opacity: 1;
+}
+
+.about-swiper .swiper-pagination-bullet-active {
+  background: #2563eb;
+}

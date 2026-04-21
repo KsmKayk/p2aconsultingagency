@@ -16,7 +16,7 @@ export default function ServicesSection() {
           />
           <ServiceCard
             icon={<ChatBubbleLeftRightIcon className="h-8 w-8 text-green-600" />}
-            title="Integração de Chatbots"
+            title="Integração de Agentes"
             description="Integre chatbots inteligentes para oferecer suporte 24/7 aos seus clientes."
           />
           <ServiceCard
