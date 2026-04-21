@@ -1,24 +1,24 @@
 import { useState } from 'react';
 
 export default function ScheduleSection() {
-  function formatDateForInput(date) {
+  function formatDateForInput(date: Date): string {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
 
-  function getWhatsAppLink(date, time) {
+  function getWhatsAppLink(date: Date, time: string): string {
     // Replace with actual WhatsApp number
     const phoneNumber = "5521983695022"; // Updated number from UPDATE_CLAUDE.md
     const message = encodeURIComponent(`Olá, gostaria de agendar uma consulta para o dia ${date.toLocaleDateString('pt-BR')} às ${time}.`);
     return `https://wa.me/${phoneNumber}?text=${message}`;
   }
 
-  const [selectedDate, setSelectedDate] = useState(formatDateForInput(new Date()));
-  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedDate, setSelectedDate] = useState<string>(formatDateForInput(new Date()));
+  const [selectedTime, setSelectedTime] = useState<string>('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!selectedDate || !selectedTime) {

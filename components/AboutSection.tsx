@@ -27,10 +27,10 @@ export default function AboutSection() {
             <div className="grid md:grid-cols-2 gap-8 items-start">
               <div>
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  A P2A Consulting Agency é especializada em ajudar empresas a alcançar seus objetivos de negócios por meio de automação e inteligência artificial aplicada a chats como WhatsApp. Nossa missão é transformar a comunicação empresarial, tornando-a mais eficiente, personalizada e acessível 24/7.
+                  A P2A Consulting Agency nasceu para eliminar o gargalo do atendimento humano em empresas que querem crescer. Não entregamos apenas "respostas automáticas"; desenvolvemos Ecossistemas de Automação utilizando Inteligência Artificial e agentes inteligentes que compreendem o contexto do seu cliente.
                 </p>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  Com anos de experiência em tecnologia e atendimento ao cliente, desenvolvemos soluções que não apenas automatizam processos, mas também geram insights valiosos para tomada de decisões estratégicas. Nossa equipe combina expertise técnica com compreensão profunda das necessidades do mercado brasileiro.
+                  Combinamos o poder de ferramentas como n8n e os principais LLMs do mercado para transformar o seu WhatsApp em uma máquina de vendas e suporte técnico, gerando eficiência operacional e dados estratégicos para o seu negócio.
                 </p>
               </div>
               <div className="space-y-6">
@@ -41,7 +41,7 @@ export default function AboutSection() {
                   <div className="ml-4">
                     <h3 className="text-lg font-medium text-gray-800">Missão</h3>
                     <p className="text-sm text-gray-600">
-                      Empoderar empresas com soluções de automação e IA que melhoram a eficiência operacional e a satisfação do cliente.
+                      Democratizar o acesso à IA de ponta, permitindo que pequenos e médios negócios tenham a eficiência de grandes corporações através da automação inteligente.
                     </p>
                   </div>
                 </div>
@@ -52,7 +52,7 @@ export default function AboutSection() {
                   <div className="ml-4">
                     <h3 className="text-lg font-medium text-gray-800">Visão</h3>
                     <p className="text-sm text-gray-600">
-                      Ser referência global em inovação para atendimento ao cliente, reconhecida pela qualidade de nossas soluções e pelo impacto positivo nos negócios de nossos clientes.
+                      Ser o principal parceiro tecnológico de empresas brasileiras na transição para uma economia movida por Agentes de IA.
                     </p>
                   </div>
                 </div>

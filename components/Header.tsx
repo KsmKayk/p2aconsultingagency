@@ -3,7 +3,7 @@ import { useState } from 'react';
 import logo from '../public/logo.jpg';
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50 backdrop-blur-sm">
