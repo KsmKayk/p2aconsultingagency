@@ -26,7 +26,7 @@ export default function Header() {
               Serviços
             </Link>
             <Link href="#agendar" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-              Agende uma Consulta
+              Contato
             </Link>
           </div>
           <div className="md:hidden">
@@ -60,7 +60,7 @@ export default function Header() {
             href="#agendar"
             className="block text-gray-900 px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200"
           >
-            Agende uma Consulta
+            Contato
           </Link>
         </div>
       </div>

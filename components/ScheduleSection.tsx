@@ -11,7 +11,7 @@ export default function ScheduleSection() {
   function getWhatsAppLink(date: Date, time: string): string {
     // Replace with actual WhatsApp number
     const phoneNumber = "5521983695022"; // Updated number from UPDATE_CLAUDE.md
-    const message = encodeURIComponent(`Olá, gostaria de agendar uma consulta para o dia ${date.toLocaleDateString('pt-BR')} às ${time}.`);
+    const message = encodeURIComponent(`Olá, gostaria de falar com um especialista no dia ${date.toLocaleDateString('pt-BR')} às ${time}.`);
     return `https://wa.me/${phoneNumber}?text=${message}`;
   }
 
@@ -53,12 +53,12 @@ export default function ScheduleSection() {
     <section id="agendar" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-center mb-16 text-gray-800">
-          Agende uma Consulta
+          Fale com um especialista
         </h2>
         <div className="space-y-8">
           <div className="text-center">
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-              Selecione data e horário para agendamento
+              Selecione data e horário
             </h3>
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <input
@@ -85,11 +85,11 @@ export default function ScheduleSection() {
                 type="submit"
                 className="w-full max-w-xs bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 transform hover:scale-[1.05]"
               >
-                Agendar Consulta
+                Enviar
               </button>
             </form>
             <p className="mt-4 text-gray-600 text-sm">
-              Horários disponíveis: todos os dias, das 8h às 18h.
+              Dias e horários disponíveis: De segunda a sábado, das 8hs às 18hs.
             </p>
           </div>
 

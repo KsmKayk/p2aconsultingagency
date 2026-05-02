@@ -14,17 +14,17 @@ export default function ServicesSection() {
           <ServiceCard
             icon={<SiN8N className="h-8 w-8 text-red-600" />}
             title="Atendimento Inteligente com Agentes de IA"
-            description='Não é apenas um robô de "digite 1". Criamos agentes que conversam de forma natural, tiram dúvidas, agendam horários e qualificam leads no seu WhatsApp e Direct, integrados ao seu CRM'
+            description='Não é apenas um robô de “digite 1”. Implantamos agentes de inteligência artificial capazes de conversar naturalmente em chats, fazer atendimentos, organizar agendas, qualificar leads e, ainda, estarem integrados com diversos sistemas.'
           />
           <ServiceCard
             icon={<TbBrowserPlus className="h-8 w-8 text-green-600" />}
             title="Presença Digital: Landing Pages de Alta Performance"
-            description="De nada adianta automatizar o atendimento se sua vitrine não converte. Desenvolvemos Landing Pages profissionais, rápidas e otimizadas para SEO, focadas em transformar visitantes em clientes reais"
+            description="De nada adianta automatizar o atendimento se sua vitrine não converte. Desenvolvemos Landing Pages profissionais, rápidas e otimizadas para SEO, focadas em transformar visitantes em clientes reais."
           />
           <ServiceCard
             icon={<FaWandMagicSparkles className="h-8 w-8 text-purple-600" />}
             title="Automação de Processos e Integrações Customizadas"
-            description="Precisa que seu WhatsApp fale com sua planilha, seu ERP ou seu sistema de pagamentos? Desenvolvemos fluxos de trabalho sob medida para eliminar tarefas manuais e repetitivas"
+            description="O seu negócio funcionando 24/7, tornar tarefas complexas ou repetitivas em automatizadas e fazendo integrações com planilhas ou com sistemas. Podemos acrescentar no final, ajustando o “e” e devidas pontuações: “e liberar a mão de obra humana para agregar valor em outras demandas e evitando dispersões."
           />
         </div>
       </div>

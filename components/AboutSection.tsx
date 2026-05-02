@@ -19,7 +19,7 @@ export default function AboutSection() {
           slidesPerView={1}
           spaceBetween={30}
           loop
-          pagination={{ clickable: true }}
+          pagination={{ clickable: false }}
           className="my-4 about-swiper"
         >
           {/* Slide 1: Company Information */}
@@ -27,10 +27,10 @@ export default function AboutSection() {
             <div className="grid md:grid-cols-2 gap-8 items-start">
               <div>
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  A P2A Consulting Agency nasceu para eliminar o gargalo do atendimento humano em empresas que querem crescer. Não entregamos apenas "respostas automáticas"; desenvolvemos Ecossistemas de Automação utilizando Inteligência Artificial e agentes inteligentes que compreendem o contexto do seu cliente.
+                  A P2A Consulting Agency nasce para ser sua parceira, caminhando lado a lado para proporcionar uma experiência digital escalável. Acreditamos que suas ideias, como dono do negócio, precisam de atenção para aproveitar todo o potencial da inteligência artificial a seu favor. Como consultoria, queremos que você entenda o que está acontecendo.
                 </p>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  Combinamos o poder de ferramentas como n8n e os principais LLMs do mercado para transformar o seu WhatsApp em uma máquina de vendas e suporte técnico, gerando eficiência operacional e dados estratégicos para o seu negócio.
+                  Combinamos o poder de plataformas de automação e construção de workflows com os principais LLMs do mercado para transformar operações em ecossistemas inteligentes, capazes de impulsionar vendas, otimizar o suporte, melhor organização de agendas e integrar processos. Assim, geramos eficiência operacional, escalabilidade e dados estratégicos para a tomada de decisão do seu negócio.
                 </p>
               </div>
               <div className="space-y-6">
@@ -52,7 +52,7 @@ export default function AboutSection() {
                   <div className="ml-4">
                     <h3 className="text-lg font-medium text-gray-800">Visão</h3>
                     <p className="text-sm text-gray-600">
-                      Ser o principal parceiro tecnológico de empresas brasileiras na transição para uma economia movida por Agentes de IA.
+                      Ser o principal parceiro tecnológico de empresas que buscam evoluir para uma economia orientada por agentes de IA, com eficiência, autonomia e inteligência operacional.
                     </p>
                   </div>
                 </div>
@@ -61,7 +61,7 @@ export default function AboutSection() {
           </SwiperSlide>
 
           {/* Slide 2: Employee 1 */}
-          <SwiperSlide>
+          {/* <SwiperSlide>
             <div className="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto px-2">
               <div className="w-full max-w-xs sm:max-w-sm h-56 sm:h-64 mx-auto md:mx-0 overflow-hidden rounded-xl shadow-sm">
                 <img
@@ -78,10 +78,10 @@ export default function AboutSection() {
                 </p>
               </div>
             </div>
-          </SwiperSlide>
+          </SwiperSlide> */}
 
           {/* Slide 3: Employee 2 */}
-          <SwiperSlide>
+          {/* <SwiperSlide>
             <div className="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto px-2">
               <div className="w-full max-w-xs sm:max-w-sm h-56 sm:h-64 mx-auto md:mx-0 overflow-hidden rounded-xl shadow-sm">
                 <img
@@ -98,7 +98,7 @@ export default function AboutSection() {
                 </p>
               </div>
             </div>
-          </SwiperSlide>
+          </SwiperSlide> */}
         </Swiper>
       </div>
     </section>
