@@ -1,0 +1,579 @@
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System — P2A Consulting Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-50: #eff6ff;
+      --primary-100: #dbeafe;
+      --primary-200: #bfdbfe;
+      --primary-300: #93c5fd;
+      --primary-400: #60a5fa;
+      --primary-500: #3b82f6;
+      --primary-600: #2563eb;
+      --primary-700: #1d4ed8;
+      --primary-800: #1e40af;
+      --primary-900: #1e3a8a;
+
+      --secondary-50: #f0fdf4;
+      --secondary-100: #dcfce7;
+      --secondary-200: #bbf7d0;
+      --secondary-300: #86efac;
+      --secondary-400: #4ade80;
+      --secondary-500: #22c55e;
+      --secondary-600: #16a34a;
+      --secondary-700: #15803d;
+      --secondary-800: #166534;
+      --secondary-900: #14532d;
+
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+
+      --red-600: #dc2626;
+      --purple-600: #9333ea;
+
+      --white: #ffffff;
+      --black: #000000;
+
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--gray-50);
+      color: var(--gray-600);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 48px;
+      height: 64px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; justify-self: start; }
+    .nav-brand { font-weight: 700; font-size: 16px; color: var(--gray-800); letter-spacing: -0.5px; }
+    .nav-links { list-style: none; display: flex; gap: 28px; align-items: center; justify-self: center; }
+    .nav-links a { color: var(--gray-600); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 200ms; }
+    .nav-links a:hover { color: var(--gray-900); }
+    .nav-cta {
+      background: var(--primary-600); color: var(--white); border: none;
+      padding: 10px 20px; font-weight: 600; font-size: 14px;
+      cursor: pointer; font-family: inherit; border-radius: 8px;
+      transition: background 200ms;
+      justify-self: end;
+    }
+    .nav-cta:hover { background: var(--primary-700); }
+
+    .hero {
+      padding: 96px 48px;
+      background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      min-height: 600px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1;
+    }
+    .hero > * { position: relative; z-index: 2; }
+    .hero-content { max-width: 640px; color: var(--white); }
+    .hero-art {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-800) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: rgba(255,255,255,0.2);
+      font-weight: 700;
+    }
+    .hero h1 {
+      font-size: 48px; font-weight: 700; line-height: 1.1; color: var(--white);
+      margin: 0 0 16px; text-align: left;
+    }
+    .hero p { font-size: 18px; color: rgba(255,255,255,0.9); max-width: 540px; margin: 0 0 40px; line-height: 1.6; text-align: left; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start; }
+
+    .btn {
+      display: inline-block; padding: 12px 32px; height: 48px;
+      font-size: 14px; font-weight: 600; border: none;
+      cursor: pointer; font-family: inherit; line-height: 1;
+      border-radius: 8px; transition: all 200ms;
+    }
+    .btn-primary { background: var(--primary-600); color: var(--white); }
+    .btn-primary:hover { background: var(--primary-700); transform: scale(1.02); }
+    .btn-white { background: var(--white); color: var(--primary-600); }
+    .btn-white:hover { background: var(--gray-100); transform: scale(1.02); }
+    .btn-outline { background: transparent; color: var(--white); border: 1px solid var(--white); }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+    section { max-width: 1280px; margin: 0 auto; padding: 80px 48px; }
+    .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray-400); font-weight: 700; margin-bottom: 12px; }
+    .section-heading { font-size: 36px; font-weight: 700; color: var(--gray-800); margin-bottom: 16px; }
+    .section-intro { font-size: 16px; color: var(--gray-600); max-width: 720px; margin-bottom: 48px; line-height: 1.6; }
+
+    .palette-group { margin-bottom: 56px; }
+    .palette-group h3 { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 20px; }
+    .palette-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .swatch { border: 1px solid var(--gray-200); background: var(--white); border-radius: 12px; overflow: hidden; }
+    .swatch-color { height: 80px; }
+    .swatch-meta { padding: 12px 14px; }
+    .swatch-name { font-weight: 600; font-size: 12px; color: var(--gray-800); margin-bottom: 4px; }
+    .swatch-hex { font-family: ui-monospace, 'SF Mono', monospace; font-size: 12px; color: var(--gray-400); margin-bottom: 6px; }
+    .swatch-role { font-size: 12px; color: var(--gray-600); line-height: 1.5; }
+
+    .type-row { display: grid; grid-template-columns: 320px 1fr; gap: 32px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--gray-200); }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta { font-size: 12px; color: var(--gray-400); line-height: 1.5; }
+    .type-meta strong { display: block; color: var(--gray-800); font-weight: 600; font-size: 12px; margin-bottom: 4px; }
+    .type-sample { color: var(--gray-800); }
+
+    .button-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+    .button-cell { border: 1px solid var(--gray-200); padding: 28px; background: var(--white); min-width: 0; border-radius: 12px; }
+    .button-label { font-size: 12px; color: var(--gray-800); font-weight: 600; margin-bottom: 12px; }
+    .button-meta { font-size: 12px; color: var(--gray-400); margin-top: 14px; line-height: 1.5; }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; min-width: 0; }
+    .card-grid > * { min-width: 0; }
+
+    .service-card { background: var(--white); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); padding: 24px; transition: all 300ms; }
+    .service-card:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); transform: translateY(-4px); }
+    .service-card .icon-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .service-card .icon-box { padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .service-card .icon-box.red { background: rgba(220,38,38,0.1); color: var(--red-600); }
+    .service-card .icon-box.green { background: rgba(34,197,94,0.1); color: var(--secondary-600); }
+    .service-card .icon-box.purple { background: rgba(147,51,234,0.1); color: var(--purple-600); }
+    .service-card h3 { font-size: 20px; font-weight: 600; color: var(--gray-800); margin-bottom: 12px; }
+    .service-card p { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+
+    .about-card { background: var(--blue-50); border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .about-card .icon-box { width: 40px; height: 40px; background: var(--blue-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .about-card h3 { font-size: 18px; font-weight: 500; color: var(--gray-800); margin-bottom: 8px; }
+    .about-card p { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+    .form-cell { min-width: 0; }
+    .form-label { font-size: 12px; font-weight: 600; color: var(--gray-800); margin-bottom: 8px; display: block; }
+    .form-input {
+      width: 100%; background: var(--white); color: var(--gray-600); border: 1px solid var(--gray-300);
+      padding: 12px 16px; font-size: 14px; height: 48px; font-family: inherit; font-weight: 400;
+      border-radius: 8px; transition: border-color 200ms;
+    }
+    .form-input:focus { outline: none; border-color: var(--primary-500); box-shadow: 0 0 0 2px rgba(37,99,235,0.2); }
+
+    .footer-preview { background: var(--gray-900); color: var(--gray-200); padding: 48px 48px; max-width: 1280px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 32px; }
+    .footer-col h3 { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 16px; }
+    .footer-col p, .footer-col a { font-size: 14px; color: var(--gray-200); text-decoration: none; display: block; margin-bottom: 8px; transition: color 200ms; }
+    .footer-col a:hover { color: var(--primary-400); }
+    .footer-bottom { border-top: 1px solid #374151; padding-top: 24px; text-align: center; font-size: 13px; color: var(--gray-400); }
+
+    .social-icons { display: flex; gap: 20px; }
+    .social-icon { color: var(--gray-200); transition: color 200ms; display: flex; align-items: center; }
+    .social-icon:hover { color: var(--primary-400); }
+    .social-icon svg { width: 32px; height: 32px; }
+
+    .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+    .spacing-block { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .spacing-bar { background: var(--primary-600); height: 28px; }
+    .spacing-label { font-size: 11px; color: var(--gray-400); font-family: ui-monospace, monospace; }
+
+    .radius-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .radius-block {
+      width: 96px; height: 96px;
+      background: var(--white); border: 1px solid var(--gray-200);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--gray-800); font-weight: 600; font-family: ui-monospace, monospace;
+    }
+
+    .elevation-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+    .elevation-card { background: var(--white); padding: 24px; border-radius: 12px; font-size: 13px; color: var(--gray-800); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .elevation-card h5 { font-weight: 600; color: var(--gray-800); margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .elevation-card p { color: var(--gray-400); font-size: 12px; }
+    .elevation-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); }
+    .elevation-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); }
+    .elevation-hover:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); transform: translateY(-4px); transition: all 300ms; }
+
+    .responsive-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; font-size: 14px; }
+    .responsive-table th, .responsive-table td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--gray-200); }
+    .responsive-table th { font-weight: 600; color: var(--gray-800); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .responsive-table td { color: var(--gray-600); }
+
+    .device-ladder { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+    .device-bar { background: var(--gray-200); color: var(--gray-500); text-align: center; padding: 8px; font-size: 11px; font-family: ui-monospace, monospace; flex-shrink: 0; }
+
+    @media (max-width: 1024px) {
+      section { padding: 64px 32px; }
+      .section-heading { font-size: 28px; }
+      .nav > :last-child { display: none; }
+      .hero { grid-template-columns: 1fr; gap: 32px; padding: 64px 32px; }
+      .hero h1 { font-size: 36px; }
+      .hero-art { display: none; }
+      .type-row { grid-template-columns: 1fr; gap: 8px; }
+      .type-row .type-meta { padding-bottom: 4px; }
+    }
+    @media (max-width: 720px) {
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 48px 20px; }
+      .hero h1 { font-size: 30px; }
+      .hero p { font-size: 16px; }
+      section { padding: 48px 20px; }
+      .section-heading { font-size: 24px; }
+      .palette-grid, .button-grid, .card-grid, .form-grid, .elevation-grid { grid-template-columns: 1fr !important; gap: 16px; }
+      .spacing-row, .radius-row { gap: 12px; }
+      .responsive-table { font-size: 12px; }
+      .responsive-table th, .responsive-table td { padding: 10px 8px; }
+      .device-ladder { gap: 8px; }
+      .footer-preview { padding: 32px 20px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-left">
+      <span class="nav-brand">P2A Consulting Agency</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre Nós</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#agendar">Contato</a></li>
+    </ul>
+    <button class="nav-cta">Entenda como!</button>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Sua empresa vendendo e atendendo 24/7 com IA de verdade</h1>
+      <p>Substitua fluxos engessados por Agentes de IA inteligentes. Automatizamos seu WhatsApp e processos internos com tecnologia de ponta para escalar sua operação sem aumentar sua equipe.</p>
+      <div class="hero-actions">
+        <button class="btn btn-white">Entenda como! →</button>
+      </div>
+    </div>
+    <div class="hero-art">AI Automation</div>
+  </div>
+
+  <section id="colors">
+    <div class="section-label">01 — Paleta de Cores</div>
+    <h2 class="section-heading">Azul primário, tons de cinza, acentos verde/vermelho</h2>
+    <p class="section-intro">O sistema usa azul-primário (#2563eb) para CTAs e elementos interativos. Tons de cinza criam superfícies limpas. Acentos verde, vermelho e roxo são reservados para ícones de serviços.</p>
+
+    <div class="palette-group">
+      <h3>Azul Primário (Brand)</h3>
+      <div class="palette-grid">
+        <div class="swatch"><div class="swatch-color" style="background:var(--primary-500);"></div><div class="swatch-meta"><div class="swatch-name">primary.500</div><div class="swatch-hex">#3b82f6</div><div class="swatch-role">Ícones, links ativos, acentos.</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--primary-600);"></div><div class="swatch-meta"><div class="swatch-name">primary.600</div><div class="swatch-hex">#2563eb</div><div class="swatch-role">Botões primários, hover states, anéis de foco.</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--primary-700);"></div><div class="swatch-meta"><div class="swatch-name">primary.700</div><div class="swatch-hex">#1d4ed8</div><div class="swatch-role">Texto de links, hover em botões.</div></div></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <h3>Acentos Secundários</h3>
+      <div class="palette-grid">
+        <div class="swatch"><div class="swatch-color" style="background:var(--secondary-500);"></div><div class="swatch-meta"><div class="swatch-name">secondary.500</div><div class="swatch-hex">#22c55e</div><div class="swatch-role">Ícone verde (Presença Digital).</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--red-600);"></div><div class="swatch-meta"><div class="swatch-name">red.600</div><div class="swatch-hex">#dc2626</div><div class="swatch-role">Ícone vermelho (n8n/IA).</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--purple-600);"></div><div class="swatch-meta"><div class="swatch-name">purple.600</div><div class="swatch-hex">#9333ea</div><div class="swatch-role">Ícone roxo (Automação/IA).</div></div></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <h3>Superfícies</h3>
+      <div class="palette-grid">
+        <div class="swatch"><div class="swatch-color" style="background:var(--white); border:1px solid var(--gray-200);"></div><div class="swatch-meta"><div class="swatch-name">white</div><div class="swatch-hex">#ffffff</div><div class="swatch-role">Background padrão, cards, header.</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--gray-50);"></div><div class="swatch-meta"><div class="swatch-name">gray.50</div><div class="swatch-hex">#f9fafb</div><div class="swatch-role">Seções alternadas (Sobre, Agendar).</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--gray-100);"></div><div class="swatch-meta"><div class="swatch-name">gray.100</div><div class="swatch-hex">#f3f4f6</div><div class="swatch-role">Gradiente do banner (fim).</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--blue-50);"></div><div class="swatch-meta"><div class="swatch-name">blue.50</div><div class="swatch-hex">#eff6ff</div><div class="swatch-role">Cards Missão/Visão (Sobre).</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--blue-100);"></div><div class="swatch-meta"><div class="swatch-name">blue.100</div><div class="swatch-hex">#dbeafe</div><div class="swatch-role">Containers de ícones (Sobre).</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--gray-900);"></div><div class="swatch-meta"><div class="swatch-name">gray.900</div><div class="swatch-hex">#111827</div><div class="swatch-role">Footer background.</div></div></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <h3>Texto</h3>
+      <div class="palette-grid">
+        <div class="swatch"><div class="swatch-color" style="background:var(--gray-800);"></div><div class="swatch-meta"><div class="swatch-name">gray.800</div><div class="swatch-hex">#1f2937</div><div class="swatch-role">Títulos (h2, h3) em headings.</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--gray-600);"></div><div class="swatch-meta"><div class="swatch-name">gray.600</div><div class="swatch-hex">#4b5563</div><div class="swatch-role">Texto de corpo, descrições.</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--gray-200);"></div><div class="swatch-meta"><div class="swatch-name">gray.200</div><div class="swatch-hex">#e5e7eb</div><div class="swatch-role">Texto muted no footer.</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--white); border:1px solid var(--gray-200);"></div><div class="swatch-meta"><div class="swatch-name">white</div><div class="swatch-hex">#ffffff</div><div class="swatch-role">Texto sobre fundos escuros.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="typography">
+    <div class="section-label">02 — Escala Tipográfica</div>
+    <h2 class="section-heading">System Sans-Serif · 400 / 600 / 700</h2>
+    <p class="section-intro">Headlines em 600/700 weight, corpo em 400 weight com line-height generoso (1.5-1.6). Sentence-case em todas as headlines para um tom approachable de consultoria.</p>
+
+    <div class="type-row"><div class="type-meta"><strong>hero-xl</strong>48px / 700 / 1.1 / 0</div><div class="type-sample" style="font-size:48px; font-weight:700; line-height:1.1;">Sua empresa vendendo 24/7</div></div>
+    <div class="type-row"><div class="type-meta"><strong>hero-md</strong>24px / 400 / 1.6 / 0</div><div class="type-sample" style="font-size:24px; font-weight:400; line-height:1.6; color:var(--gray-600);">Automatizamos seu WhatsApp com tecnologia de ponta</div></div>
+    <div class="type-row"><div class="type-meta"><strong>section-heading</strong>36px / 700 / 1.2 / 0</div><div class="type-sample" style="font-size:36px; font-weight:700; line-height:1.2;">Nossos Serviços</div></div>
+    <div class="type-row"><div class="type-meta"><strong>card-title</strong>20px / 600 / 1.2 / 0</div><div class="type-sample" style="font-size:20px; font-weight:600; line-height:1.2;">Atendimento Inteligente com IA</div></div>
+    <div class="type-row"><div class="type-meta"><strong>body-lg</strong>18px / 400 / 1.6 / 0</div><div class="type-sample" style="font-size:18px; font-weight:400; line-height:1.6; color:var(--gray-600);">Combinamos o poder de plataformas de automação e IA para transformar operações.</div></div>
+    <div class="type-row"><div class="type-meta"><strong>body-md</strong>16px / 400 / 1.5 / 0</div><div class="type-sample" style="font-size:16px; font-weight:400; line-height:1.5; color:var(--gray-600);">Democratizar o acesso à IA de ponta para pequenos e médios negócios.</div></div>
+    <div class="type-row"><div class="type-meta"><strong>body-sm</strong>14px / 400 / 1.5 / 0</div><div class="type-sample" style="font-size:14px; font-weight:400; line-height:1.5; color:var(--gray-600);">Dias e horários disponíveis: Segunda a sábado, 8h às 18h.</div></div>
+    <div class="type-row"><div class="type-meta"><strong>button</strong>14px / 600 / 1.0 / 0</div><div class="type-sample" style="font-size:14px; font-weight:600; line-height:1;">Entenda como!</div></div>
+    <div class="type-row"><div class="type-meta"><strong>nav-link</strong>14px / 500 / 1.4 / 0</div><div class="type-sample" style="font-size:14px; font-weight:500; line-height:1.4; color:var(--gray-600);">Sobre Nós · Serviços · Contato</div></div>
+    <div class="type-row"><div class="type-meta"><strong>caption</strong>12px / 400 / 1.4 / 0</div><div class="type-sample" style="font-size:12px; font-weight:400; line-height:1.4; color:var(--gray-400);">© 2026 P2A Consulting Agency. Todos os direitos reservados.</div></div>
+  </section>
+
+  <section id="components">
+    <div class="section-label">03 — Variações de Botões</div>
+    <h2 class="section-heading">Cantos arredondados, transições suaves</h2>
+    <p class="section-intro">Todos os botões usam rounded-lg (8px) com transições de 200ms. Efeito hover inclui mudança de cor e leve escala (scale 1.02) para feedback visual.</p>
+
+    <div class="button-grid">
+      <div class="button-cell"><div class="button-label">button-primary</div><button class="btn btn-primary">Entenda como!</button><div class="button-meta">bg-blue-600 / white text / 8px radius / hover:bg-blue-700</div></div>
+      <div class="button-cell" style="background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white;"><div class="button-label" style="color:white;">button-white (banner)</div><button class="btn btn-white">Entenda como! →</button><div class="button-meta" style="color:rgba(255,255,255,0.6);">bg-white / blue-600 text / hover:bg-gray-100</div></div>
+      <div class="button-cell"><div class="button-label">button-submit</div><button class="btn btn-primary" style="width:100%;">Enviar</button><div class="button-meta">Full-width / font-medium / hover:scale-1.05</div></div>
+      <div class="button-cell"><div class="button-label">text-link (footer)</div><a href="#" style="color:var(--gray-600); text-decoration:none; font-weight:600; font-size:14px; transition:color 200ms;">Sobre Nós →</a><div class="button-meta">hover:text-blue-400 / transition-colors 200ms</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">04 — Service Cards</div>
+    <h2 class="section-heading">Cards com sombra, hover lift e cantos arredondados</h2>
+    <p class="section-intro">Cards de serviços com bg-white, rounded-xl (12px), shadow-md. Hover state: shadow-xl + translateY(-4px) + transição de 300ms.</p>
+
+    <div class="card-grid">
+      <div class="service-card">
+        <div class="icon-row">
+          <div class="icon-box red">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z"/></svg>
+          </div>
+          <h3>Atendimento Inteligente com Agentes de IA</h3>
+        </div>
+        <p>Não é apenas um robô de "digite 1". Implantamos agentes de IA capazes de conversar naturalmente em chats, fazer atendimentos e qualificar leads.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-row">
+          <div class="icon-box green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>Presença Digital: Landing Pages</h3>
+        </div>
+        <p>Desenvolvemos Landing Pages profissionais, rápidas e otimizadas para SEO, focadas em transformar visitantes em clientes reais.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-row">
+          <div class="icon-box purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Automação de Processos e Integrações</h3>
+        </div>
+        <p>O seu negócio funcionando 24/7, tornar tarefas complexas em automatizadas e fazer integrações com planilhas ou sistemas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">05 — About Section Cards</div>
+    <h2 class="section-heading">Mission & Vision Cards</h2>
+
+    <div class="card-grid">
+      <div class="about-card">
+        <div class="icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3>Missão</h3>
+        <p>Democratizar o acesso à IA de ponta, permitindo que pequenos e médios negócios tenham a eficiência de grandes corporações.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>Visão</h3>
+        <p>Ser o principal parceiro tecnológico de empresas que buscam evoluir para uma economia orientada por agentes de IA.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">06 — Form Elements (Schedule Section)</div>
+    <p class="section-intro">Inputs com rounded-lg (8px), border-gray-300, focus ring azul. Hover e focus states com transições suaves.</p>
+
+    <div class="form-grid">
+      <div class="form-cell">
+        <label class="form-label">Data</label>
+        <input class="form-input" type="date">
+      </div>
+      <div class="form-cell">
+        <label class="form-label">Horário</label>
+        <select class="form-input">
+          <option>Selecione o horário</option>
+          <option>08:00</option>
+          <option>09:00</option>
+          <option>10:00</option>
+        </select>
+      </div>
+      <div class="form-cell">
+        <label class="form-label">Enviar</label>
+        <button class="btn btn-primary" style="width:100%;">Enviar</button>
+      </div>
+    </div>
+    <p style="margin-top:16px; font-size:13px; color:var(--gray-500);">Dias e horários disponíveis: De segunda a sábado, das 8hs às 18hs.</p>
+  </section>
+
+  <section>
+    <div class="section-label">07 — Elevation & Shadows</div>
+    <p class="section-intro">Sombras sutis para indicar profundidade. Hover effects com translateY e aumento de sombra.</p>
+
+    <div class="elevation-grid">
+      <div class="elevation-card">
+        <h5>Flat</h5>
+        <p>bg-white / sem sombra / borda sutil</p>
+        <p style="margin-top:8px; font-size:12px;">Usado em: Body sections, header</p>
+      </div>
+      <div class="elevation-card elevation-md">
+        <h5>Shadow MD</h5>
+        <p>shadow-md / cards de serviço</p>
+        <p style="margin-top:8px; font-size:12px;">Usado em: Service cards (default)</p>
+      </div>
+      <div class="elevation-card elevation-xl">
+        <h5>Shadow XL</h5>
+        <p>shadow-xl / hover state</p>
+        <p style="margin-top:8px; font-size:12px;">Usado em: Service cards (hover)</p>
+      </div>
+      <div class="elevation-card elevation-hover">
+        <h5>Hover Effect</h5>
+        <p>translateY(-4px) + shadow-xl</p>
+        <p style="margin-top:8px; font-size:12px;">Transition: all 300ms</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">08 — Spacing Scale</div>
+    <p class="section-intro">Espaçamento vertical de 80px (py-20) entre seções principais. Base 4px do Tailwind.</p>
+    <div class="spacing-row">
+      <div class="spacing-block"><div class="spacing-bar" style="width:16px;"></div><div class="spacing-label">sm · 16px</div></div>
+      <div class="spacing-block"><div class="spacing-bar" style="width:24px;"></div><div class="spacing-label">md · 24px</div></div>
+      <div class="spacing-block"><div class="spacing-bar" style="width:32px;"></div><div class="spacing-label">lg · 32px</div></div>
+      <div class="spacing-block"><div class="spacing-bar" style="width:40px;"></div><div class="spacing-label">xl · 40px</div></div>
+      <div class="spacing-block"><div class="spacing-bar" style="width:48px;"></div><div class="spacing-label">2xl · 48px</div></div>
+      <div class="spacing-block"><div class="spacing-bar" style="width:64px;"></div><div class="spacing-label">3xl · 64px</div></div>
+      <div class="spacing-block"><div class="spacing-bar" style="width:80px;"></div><div class="spacing-label">py-20 · 80px</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">09 — Border Radius Scale</div>
+    <p class="section-intro">Predominantemente rounded-xl (12px) para cards e rounded-lg (8px) para botões. Cantos arredondados reforçam o tom "approachable".</p>
+    <div class="radius-row">
+      <div class="radius-block" style="border-radius:0;">none (0px)</div>
+      <div class="radius-block" style="border-radius:6px;">md (6px)</div>
+      <div class="radius-block" style="border-radius:8px;">lg (8px)</div>
+      <div class="radius-block" style="border-radius:12px;">xl (12px)</div>
+      <div class="radius-block" style="border-radius:16px;">2xl (16px)</div>
+      <div class="radius-block" style="border-radius:50%;">full (50%)</div>
+    </div>
+  </section>
+
+  <section id="responsive">
+    <div class="section-label">10 — Responsive Behavior</div>
+    <h2 class="section-heading">Mobile-First com Breakpoints Tailwind</h2>
+    <p class="section-intro">Mobile (&lt;768px): 1 coluna, menu hamburger. Tablet (768-1024px): 2 colunas. Desktop (&gt;1024px): 3 colunas para serviços, 4 colunas para footer.</p>
+
+    <table class="responsive-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Largura</th>
+          <th>Principais Mudanças</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mobile</td>
+          <td>&lt; 768px</td>
+          <td>1 coluna; menu hamburger; hero h1 30px; service cards 1-up; footer 1 coluna</td>
+        </tr>
+        <tr>
+          <td>Tablet</td>
+          <td>768-1024px</td>
+          <td>2 colunas (About); 3 colunas (Services) em lg:; footer 4 colunas</td>
+        </tr>
+        <tr>
+          <td>Desktop</td>
+          <td>&gt; 1024px</td>
+          <td>Layout completo; max-w-7xl; grid-cols-3 serviços; grid-cols-2 about</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="device-ladder">
+      <div class="device-bar" style="width:200px; height:300px;">Mobile<br>375px</div>
+      <div class="device-bar" style="width:250px; height:350px;">Tablet<br>768px</div>
+      <div class="device-bar" style="width:300px; height:400px;">Desktop<br>1280px</div>
+    </div>
+  </section>
+
+  <div class="footer-preview">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>P2A Consulting Agency</h3>
+        <p>Especializada em automação e IA para chats como WhatsApp, ajudando empresas a alcançar seus objetivos com eficiência e inovação.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Contato</h3>
+        <p>Telefone: +55 21 983695022</p>
+        <p>Email: p2aconsultingagency@gmail.com</p>
+      </div>
+      <div class="footer-col">
+        <h3>Links Rápidos</h3>
+        <a href="#sobre">Sobre Nós</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#agendar">Agende uma Consulta</a>
+      </div>
+      <div class="footer-col">
+        <h3>Redes Sociais</h3>
+        <div class="social-icons">
+          <a href="#" class="social-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.265-.058 1.644-.07 4.849-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="social-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 P2A Consulting Agency. Todos os direitos reservados.
+    </div>
+  </div>
+
+</body>
+</html>

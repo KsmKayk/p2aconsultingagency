@@ -1,1 +1,6 @@
 node_modules
+.claude
+.next
+.env
+out
+out/*
